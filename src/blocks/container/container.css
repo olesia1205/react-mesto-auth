@@ -1,0 +1,9 @@
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  background-color: #000000;
+  -webkit-font-smooting: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}

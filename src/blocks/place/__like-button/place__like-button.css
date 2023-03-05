@@ -1,0 +1,18 @@
+.place__like-button {
+  width: 22px;
+  height: 19px;
+  background-image: url(../../../images/like-button_status_disabled.svg);
+  border: 0;
+  padding: 0;
+  margin: auto 0;
+  background-color: transparent;
+  background-size: cover;
+  align-self: center;
+  transition: opacity 0.35s linear;
+  cursor: pointer;
+}
+
+.place__like-button:hover {
+  opacity: 50%;
+}
+

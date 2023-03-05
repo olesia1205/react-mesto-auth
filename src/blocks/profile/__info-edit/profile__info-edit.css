@@ -1,0 +1,10 @@
+.profile__info-edit {
+  display: flex;
+  align-items: baseline;
+}
+
+@media screen and (max-width: 630px) {
+  .profile__info-edit {
+    position: relative;
+  }
+}

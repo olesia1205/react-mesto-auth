@@ -1,0 +1,5 @@
+.place__like-unit {
+  display: flex;
+  flex-direction: column;
+  margin: 22px 20px;
+}

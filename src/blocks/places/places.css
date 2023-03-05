@@ -1,0 +1,19 @@
+.places {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto, 1fr);
+  gap: 20px 17px;
+}
+
+@media screen and (max-width: 900px) {
+  .places {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .places {
+    grid-template-columns: 1fr;
+  }
+}
