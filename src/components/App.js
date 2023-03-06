@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Switch } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -20,7 +20,6 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
-  const [userData, setUserData] = useState({});
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
@@ -39,7 +38,7 @@ function App() {
       .then((result) => {
         const [dataForUserInfo, dataForInitialCards] = result;
         // console.log(result);
-        setUserData(dataForUserInfo);
+        setCurrentUser(dataForUserInfo);
         setCards(dataForInitialCards);
       })
       .catch(err => alert(err))
@@ -54,9 +53,15 @@ function App() {
       .catch(err => alert(err))
   }, []);
 
-  const handleCardClick = (selectedCard) => {
+  function handleCardClick (selectedCard) {
     setSelectedCard(selectedCard);
   };
+
+  function handleOverlayClick (evt) {
+    if (evt.target === evt.currentTarget) {
+      closeAllPopups();
+    }
+  }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -112,7 +117,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
 
-        <Main
+        {/* <Main
           onEditProfile={handleEditProfileClick}
           onEditAvatar={handleEditAvatarClick}
           onAddPlace={handleAddPlaceClick}
@@ -121,13 +126,14 @@ function App() {
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
-        />
+          loggedIn={loggedIn}
+        /> */}
 
         <Routes>
           <Route exact path='/'
             element={
               <>
-                {/* <ProtectedRoute
+                <ProtectedRoute
                   Component={Main}
                     onEditProfile={handleEditProfileClick}
                     onEditAvatar={handleEditAvatarClick}
@@ -138,7 +144,7 @@ function App() {
                     onCardLike={handleCardLike}
                     onCardDelete={handleCardDelete}
                     loggedIn={loggedIn}
-                /> */}
+                />
                 <Footer />
               </>
             }
@@ -152,11 +158,12 @@ function App() {
           card={selectedCard}
           onClose={closeAllPopups}
           isOpen={isImagePopupOpen}
+          onOverlayClick={handleOverlayClick}
         />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} onOverlayClick={handleOverlayClick} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} onOverlayClick={handleOverlayClick} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} onOverlayClick={handleOverlayClick} />
 
         {/* Попап удаления карточки */}
         <PopupWithForm

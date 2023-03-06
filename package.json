@@ -1,5 +1,5 @@
 {
-  "name": "mesto-react",
+  "name": "react-mesto-auth",
   "version": "0.1.0",
   "private": true,
   "author": "Olesia Erastova",
@@ -44,7 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/olesia1205/mesto-react.git"
+    "url": "git+https://github.com/olesia1205/react-mesto-auth.git"
   },
-  "homepage": "https://olesia1205.github.io/mesto-react"
+  "homepage": "https://olesia1205.github.io/react-mesto-auth"
 }
