@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Switch } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -130,7 +130,7 @@ function App() {
         /> */}
 
         <Routes>
-          <Route exact path='/'
+          {/* <Route exact path='/'
             element={
               <>
                 <ProtectedRoute
@@ -148,10 +148,11 @@ function App() {
                 <Footer />
               </>
             }
-          />
+          /> */}
 
           <Route path='/sign-up' element={<Register />} />
           <Route path='/sign-in' element={<Login />} />
+          <Route path='*' element={<Navigate to='/sign-up' replace />}/>
         </Routes>
 
         <ImagePopup

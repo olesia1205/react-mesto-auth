@@ -1,0 +1,23 @@
+.signup__input-error_active {
+  display: inline;
+  padding: 5px 0 0;
+  margin: 0 36px;
+  width: 358px;
+  border: none;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  font-style: normal;
+  font-weight: 400;
+  color: #FF0000;
+  position: relative;
+  top: -1px;
+  border-top: solid 1px #FF0000;
+}
+
+@media screen and (max-width: 630px) {
+  .signup__input-error_active {
+    width: 238px;
+    margin: 0 22px;
+  }
+}

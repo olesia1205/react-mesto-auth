@@ -1,0 +1,15 @@
+.signup__container {
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+  background-color: #000000;
+  margin: auto;
+  position: relative;
+  border: 1px solid yellow;
+}
+
+@media screen and (max-width: 630px) {
+  .signup__container {
+    width: 282px;
+  }
+}

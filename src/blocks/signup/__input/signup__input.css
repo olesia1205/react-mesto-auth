@@ -1,0 +1,24 @@
+.signup__input {
+  padding: 0 0 9px;
+  margin: 30px 36px 0;
+  width: 358px;
+  border: none;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  font-style: normal;
+  font-weight: 400;
+  background-color: #000000;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.signup__input:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 630px) {
+  .signup__input {
+    margin: 30px 22px 0;
+    width: 238px;
+  }
+}
