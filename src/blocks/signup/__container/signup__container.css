@@ -10,5 +10,6 @@
 @media screen and (max-width: 630px) {
   .signup__container {
     width: 282px;
+    align-items: center;
   }
 }
