@@ -1,0 +1,32 @@
+.signup__submit-button {
+  margin: 216px 36px 15px;
+  padding: 0;
+  border: none;
+  width: 358px;
+  height: 50px;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  transition: opacity 0.35s linear;
+  cursor: pointer;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 18px;
+  line-height: 22px;
+  font-style: normal;
+  font-weight: 400;
+  color: #000000;
+  user-select: none;
+}
+
+.signup__submit-button:hover {
+  opacity: 80%;
+}
+
+@media screen and (max-width: 630px) {
+  .signup__submit-button {
+    margin: 45px 22px 25px;
+    width: 238px;
+    height: 46px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

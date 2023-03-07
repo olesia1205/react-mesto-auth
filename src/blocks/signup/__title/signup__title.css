@@ -1,12 +1,12 @@
 .signup__title {
   margin: 0;
-  color: #b31414;
+  color: #ffffff;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
   font-size: 24px;
   line-height: 29px;
   font-style: normal;
   font-weight: 900;
-  padding: 34px 0 18px;
+  padding: 0 0 20px 0;
   align-self: center;
 }
 
@@ -14,6 +14,6 @@
   .signup__title {
     font-size: 18px;
     line-height: 22px;
-    padding: 25px 0 45px 22px;
+    padding: 25px 0 45px 0;
   }
 }

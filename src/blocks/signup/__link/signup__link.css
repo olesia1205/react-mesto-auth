@@ -1,0 +1,26 @@
+.signup__link {
+  margin: auto;
+  padding: 0 0 80px;
+  transition: opacity 0.35s linear;
+  cursor: pointer;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  font-style: normal;
+  font-weight: 400;
+  color: #FFFFFF;
+  user-select: none;
+  text-decoration: none;
+}
+
+.signup__link:hover {
+  opacity: 80%;
+}
+
+@media screen and (max-width: 630px) {
+  .signup__link {
+    margin: auto;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

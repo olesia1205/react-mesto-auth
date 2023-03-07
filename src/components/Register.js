@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Register() {
   const [name, setName] = useState('');
@@ -21,7 +22,8 @@ function Register() {
             <input className="signup__input signup__input_info_about" type="text" name="profileAbout" placeholder="Пароль"
               value={description || ''} onChange={evt => setDescription(evt.target.value)} required minLength="2" maxLength="200"/>
             <span className="signup__input-error" id="profileAbout-error"/>
-            <button  className="popup__submit-button" type="submit" name="submit-button" >Зарегистрироваться</button>
+            <button  className="signup__submit-button" type="submit" name="submit-button" >Зарегистрироваться</button>
+            <Link className="signup__link" to="/sign-in">Уже зарегистрированы? Войти</Link>
           </>
         </form>
       </div>
