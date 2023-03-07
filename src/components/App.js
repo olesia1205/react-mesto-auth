@@ -117,7 +117,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
 
-        {/* <Main
+        <Main
           onEditProfile={handleEditProfileClick}
           onEditAvatar={handleEditAvatarClick}
           onAddPlace={handleAddPlaceClick}
@@ -127,7 +127,7 @@ function App() {
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
           loggedIn={loggedIn}
-        /> */}
+        />
 
         <Routes>
           {/* <Route exact path='/'

@@ -1,0 +1,26 @@
+.header__link {
+  margin: 0;
+  padding: 8px 0 0;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  font-size: 18px;
+  line-height: 22px;
+  font-style: normal;
+  font-weight: 400;
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 0.35s linear;
+  cursor: pointer;
+}
+
+.header__link:hover {
+  opacity: 80%;
+}
+
+@media screen and (max-width: 630px) {
+  .header__link {
+    margin: auto;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 0 0 40px;
+  }
+}
