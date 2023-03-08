@@ -20,6 +20,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(true);
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
@@ -31,6 +32,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
     setSelectedCard({});
+    setInfoTooltipPopupOpen(false);
   }
 
   useEffect(() => {
@@ -115,9 +117,8 @@ function App() {
   return (
     <div  className="container">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
 
-        <Main
+        {/* <Main
           onEditProfile={handleEditProfileClick}
           onEditAvatar={handleEditAvatarClick}
           onAddPlace={handleAddPlaceClick}
@@ -127,31 +128,56 @@ function App() {
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
           loggedIn={loggedIn}
-        />
+        /> */}
 
         <Routes>
-          {/* <Route exact path='/'
+          <Route exact path='/'
             element={
               <>
-                <ProtectedRoute
-                  Component={Main}
-                    onEditProfile={handleEditProfileClick}
-                    onEditAvatar={handleEditAvatarClick}
-                    onAddPlace={handleAddPlaceClick}
-                    onImagePopup={handleImagePopupClick}
-                    cards={cards}
-                    onCardClick={handleCardClick}
-                    onCardLike={handleCardLike}
-                    onCardDelete={handleCardDelete}
-                    loggedIn={loggedIn}
+                <Header
+                  headerText={'Выйти'}
+                  linkTo={'/sign-in'}
+                />
+                <Main
+                  onEditProfile={handleEditProfileClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onImagePopup={handleImagePopupClick}
+                  cards={cards}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                  loggedIn={loggedIn}
                 />
                 <Footer />
               </>
             }
-          /> */}
+          />
 
-          <Route path='/sign-up' element={<Register />} />
-          <Route path='/sign-in' element={<Login />} />
+          <Route path='/sign-up'
+            element={
+              <>
+                <Header
+                  headerText={'Войти'}
+                  linkTo={'/sign-in'}
+                />
+                <Register />
+              </>
+            }
+          />
+
+          <Route path='/sign-in'
+            element={
+            <>
+              <Header
+                headerText={'Регистрация'}
+                linkTo={'/sign-up'}
+              />
+              <Login />
+            </>
+
+            }
+          />
           <Route path='*' element={<Navigate to='/sign-up' replace />}/>
         </Routes>
 
@@ -165,6 +191,12 @@ function App() {
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} onOverlayClick={handleOverlayClick} />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} onOverlayClick={handleOverlayClick} />
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} onOverlayClick={handleOverlayClick} />
+        <InfoTooltip
+          isOpen={isInfoTooltipPopupOpen}
+          title='Вы успешно зарегистрировались!'
+          onClose={closeAllPopups}
+          onOverlayClick={handleOverlayClick}
+        />
 
         {/* Попап удаления карточки */}
         <PopupWithForm

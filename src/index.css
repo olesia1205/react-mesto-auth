@@ -53,3 +53,5 @@
 @import url(./blocks/signup/__input-error/_active/signup__input-error_active.css);
 @import url(./blocks/signup/__submit-button/signup__submit-button.css);
 @import url(./blocks/signup/__link/signup__link.css);
+@import url(./blocks/tooltip/__image/tooltip__image.css);
+@import url(./blocks/tooltip/__title/tooltip__title.css);
