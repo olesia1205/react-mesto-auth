@@ -20,7 +20,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
-  const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(true);
+  const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
@@ -135,8 +135,9 @@ function App() {
             element={
               <>
                 <Header
-                  headerText={'Выйти'}
+                  headerText='Выйти'
                   linkTo={'/sign-in'}
+                  email='email@mail.com'
                 />
                 <Main
                   onEditProfile={handleEditProfileClick}
@@ -160,6 +161,7 @@ function App() {
                 <Header
                   headerText={'Войти'}
                   linkTo={'/sign-in'}
+                  email=''
                 />
                 <Register />
               </>
@@ -172,6 +174,7 @@ function App() {
               <Header
                 headerText={'Регистрация'}
                 linkTo={'/sign-up'}
+                email=''
               />
               <Login />
             </>
