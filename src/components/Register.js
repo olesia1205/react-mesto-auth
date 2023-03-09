@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-function Register() {
+// function Register() {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+
+//   useEffect(() => {
+//     setEmail('');
+//     setPassword('');
+//   }, []);
+
+function Register({handleRegister}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -10,11 +19,43 @@ function Register() {
     setPassword('');
   }, []);
 
+  // const [userData, setUserData] = useState({
+  //   username: '',
+  //   email: '',
+  //   password: '',
+  //   confirmPassword: ''
+  // });
+
+  // const [message, setMessage] = useState('');
+
+  // function handleChange (evt) {
+  //   const {name, value} = evt.target;
+  // }
+
+  // setUserData({
+  //   ...userData,
+  //   [name]: value,
+  // })
+
+  // function handleSubmit (evt) {
+  //   evt.preventDefault;
+  //   if (userData.password === userData.confirmPassword) {
+  //     handleRegister(userData)
+  //     .then(() => {
+  //       setMessage('');
+  //     })
+  //     .catch((error) => {
+  //       setMessage(`Что-то пошло не так! ${error}`)
+  //     })
+  //   }
+  // }
+
   return (
     <div  className="signup" >
       <div  className="signup__container">
         <h2  className="signup__title">Регистрация</h2>
-        <form  className="signup__form" noValidate>
+        {/* <form  className="signup__form" noValidate onSubmit={handleSubmit}> */}
+        <form  className="signup__form" noValidate >
           <>
             <input className="signup__input signup__input_info_email" type="email" name="email" placeholder="Email"
               value={email || ''} onChange={evt => setEmail(evt.target.value)} required minLength="3" maxLength="40"/>
@@ -29,6 +70,7 @@ function Register() {
       </div>
     </div>
   );
+
 }
 
 export default Register;

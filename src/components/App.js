@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -13,9 +13,15 @@ import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import InfoTooltip from './InfoTooltip';
 import api from '../utils/Api';
+import UserAuth from '../utils/UserAuth';
 import { CurrentUserContext} from '../contexts/CurrentUserContext';
+import userAuth from '../utils/UserAuth';
+import successImage from '../images/Success.svg';
+import failImage from '../images/Fail.svg';
 
 function App() {
+  const navigate = useNavigate();
+
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -25,6 +31,10 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(true);
+  const [userData, setUserData] =useState({
+    username: '',
+    email: ''
+  })
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
@@ -54,6 +64,45 @@ function App() {
       })
       .catch(err => alert(err))
   }, []);
+
+  useEffect(() => {
+    tockenCheck();
+  }, []);
+
+  function tockenCheck() {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      userAuth.getContent(jwt)
+      .then((res) => {
+        setLoggedIn(true);
+        setUserData({
+          username: res.username,
+          email: res.email
+        });
+        navigate ('/');
+      })
+    }
+  }
+
+  // function handleLogin() {
+  //   return userAuth.authorize({email, password}).then((data) => {
+  //     if (data.jwt) {
+  //       localStorage.setItem('jwt', data.jwt);
+  //       setLoggedIn(true);
+  //       setUserData({
+  //         username: data.user.username,
+  //         email: data.user.email
+  //       });
+  //       navigate('/');
+  //     }
+  //   })
+  // }
+
+  // function handleRegister() {
+  //   return userAuth.register(email, password).then(() => {
+  //     navigate('/sign-in');
+  //   })
+  // }
 
   function handleCardClick (selectedCard) {
     setSelectedCard(selectedCard);
@@ -117,21 +166,8 @@ function App() {
   return (
     <div  className="container">
       <CurrentUserContext.Provider value={currentUser}>
-
-        {/* <Main
-          onEditProfile={handleEditProfileClick}
-          onEditAvatar={handleEditAvatarClick}
-          onAddPlace={handleAddPlaceClick}
-          onImagePopup={handleImagePopupClick}
-          cards={cards}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          loggedIn={loggedIn}
-        /> */}
-
         <Routes>
-          <Route exact path='/'
+          {/* <Route exact path='/'
             element={
               <>
                 <Header
@@ -153,6 +189,37 @@ function App() {
                 <Footer />
               </>
             }
+          /> */}
+
+          <Route exact path='/'
+            element={
+              <>
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Header}
+                    headerText='Выйти'
+                    linkTo={'/sign-in'}
+                    email='email@mail.com'
+                />
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Main}
+                    onEditProfile={handleEditProfileClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onImagePopup={handleImagePopupClick}
+                    cards={cards}
+                    onCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete}
+                />
+                <ProtectedRoute
+                  loggedIn={loggedIn}
+                  component={Footer}
+                />
+              </>
+
+            }
           />
 
           <Route path='/sign-up'
@@ -163,7 +230,9 @@ function App() {
                   linkTo={'/sign-in'}
                   email=''
                 />
-                <Register />
+                <Register
+                  // handleRegister={handleRegister}
+                />
               </>
             }
           />
@@ -181,7 +250,10 @@ function App() {
 
             }
           />
-          <Route path='*' element={<Navigate to='/sign-up' replace />}/>
+          <Route
+            path='*'
+            element={loggedIn ? <Navigate to='/' /> : <Navigate to='/sign-in' />}
+          />
         </Routes>
 
         <ImagePopup
@@ -191,14 +263,33 @@ function App() {
           onOverlayClick={handleOverlayClick}
         />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} onOverlayClick={handleOverlayClick} />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} onOverlayClick={handleOverlayClick} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} onOverlayClick={handleOverlayClick} />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+          onOverlayClick={handleOverlayClick}
+        />
+
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+          onOverlayClick={handleOverlayClick}
+        />
+
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+          onOverlayClick={handleOverlayClick}
+        />
+
         <InfoTooltip
           isOpen={isInfoTooltipPopupOpen}
-          title='Вы успешно зарегистрировались!'
+          title={loggedIn ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
           onClose={closeAllPopups}
           onOverlayClick={handleOverlayClick}
+          image={loggedIn ? successImage : failImage}
         />
 
         {/* Попап удаления карточки */}
