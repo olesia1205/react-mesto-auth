@@ -17,7 +17,7 @@ class UserAuth {
     .then(this._getResponse)
   }
 
-  authorize(email, password) {
+  authorize({password, email}) {
     return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,

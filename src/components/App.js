@@ -31,6 +31,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [registered, setRegistered] = useState(false);
   const [userData, setUserData] =useState({
     password: '',
     email: ''
@@ -84,35 +85,32 @@ function App() {
     }
   }
 
-  function handleLogin({email, password}) {
-    return userAuth.authorize(email, password)
-    .then((data) => {
-      // console.log(data);
-      if (data.jwt) {
-        localStorage.setItem('jwt', data.jwt);
+  function handleLogin({password, email}) {
+    userAuth.authorize({password, email})
+    .then((response) => {
+      // console.log(response);
+        localStorage.setItem('jwt', response.token);
         setLoggedIn(true);
         setUserData({
-          password: data.password,
-          email: data.email
+          password: password,
+          email: email
         });
         navigate('/');
-      }
+
     })
   }
 
   function handleRegister({password, email}) {
     userAuth.register({password, email})
-    .then((data) => {
-      // console.log(data);
-      if (data.jwt) {
-        localStorage.setItem('jwt', data.jwt);
-        setLoggedIn(true);
-        setUserData({
-          username: data.user.username,
-          email: data.user.email
-        });
-        navigate('/sign-in');
-      }
+    .then(() => {
+      setRegistered(true);
+      setInfoTooltipPopupOpen(true);
+      navigate('/sign-in');
+    })
+    .catch((error) => {
+      setRegistered(false);
+      setInfoTooltipPopupOpen(true);
+      console.log(error);
     })
   }
 
@@ -187,7 +185,7 @@ function App() {
                   component={Header}
                     headerText='Выйти'
                     linkTo={'/sign-in'}
-                    email='email@mail.com'
+                    email={userData.email}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}
@@ -232,7 +230,7 @@ function App() {
                 linkTo={'/sign-up'}
                 email=''
               />
-              <Login handleLogin={handleLogin} />
+              <Login onLoginUserData={handleLogin} />
             </>
 
             }
@@ -273,10 +271,10 @@ function App() {
 
         <InfoTooltip
           isOpen={isInfoTooltipPopupOpen}
-          title={loggedIn ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+          title={registered ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
           onClose={closeAllPopups}
           onOverlayClick={handleOverlayClick}
-          image={loggedIn ? successImage : failImage}
+          image={registered ? successImage : failImage}
         />
 
         {/* Попап удаления карточки */}
