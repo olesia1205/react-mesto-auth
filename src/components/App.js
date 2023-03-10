@@ -85,6 +85,20 @@ function App() {
     }
   }
 
+  function handleRegister({password, email}) {
+    userAuth.register({password, email})
+    .then(() => {
+      setRegistered(true);
+      setInfoTooltipPopupOpen(true);
+      navigate('/sign-in');
+    })
+    .catch((error) => {
+      setRegistered(false);
+      setInfoTooltipPopupOpen(true);
+      console.log(error);
+    })
+  }
+
   function handleLogin({password, email}) {
     userAuth.authorize({password, email})
     .then((response) => {
@@ -102,18 +116,14 @@ function App() {
     })
   }
 
-  function handleRegister({password, email}) {
-    userAuth.register({password, email})
-    .then(() => {
-      setRegistered(true);
-      setInfoTooltipPopupOpen(true);
-      navigate('/sign-in');
-    })
-    .catch((error) => {
-      setRegistered(false);
-      setInfoTooltipPopupOpen(true);
-      console.log(error);
-    })
+  function handleSignOut () {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    setUserData({
+      password: '',
+      email: ''
+    });
+    navigate('/sign-in');
   }
 
   function handleCardClick (selectedCard) {
@@ -188,6 +198,7 @@ function App() {
                     headerText='Выйти'
                     linkTo={'/sign-in'}
                     email={userData.email}
+                    signOut={handleSignOut}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}
