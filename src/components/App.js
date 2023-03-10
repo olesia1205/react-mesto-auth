@@ -30,9 +30,9 @@ function App() {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] =useState({
-    username: '',
+    password: '',
     email: ''
   })
 
@@ -84,25 +84,37 @@ function App() {
     }
   }
 
-  // function handleLogin() {
-  //   return userAuth.authorize({email, password}).then((data) => {
-  //     if (data.jwt) {
-  //       localStorage.setItem('jwt', data.jwt);
-  //       setLoggedIn(true);
-  //       setUserData({
-  //         username: data.user.username,
-  //         email: data.user.email
-  //       });
-  //       navigate('/');
-  //     }
-  //   })
-  // }
+  function handleLogin({email, password}) {
+    return userAuth.authorize(email, password)
+    .then((data) => {
+      // console.log(data);
+      if (data.jwt) {
+        localStorage.setItem('jwt', data.jwt);
+        setLoggedIn(true);
+        setUserData({
+          password: data.password,
+          email: data.email
+        });
+        navigate('/');
+      }
+    })
+  }
 
-  // function handleRegister() {
-  //   return userAuth.register(email, password).then(() => {
-  //     navigate('/sign-in');
-  //   })
-  // }
+  function handleRegister({password, email}) {
+    userAuth.register({password, email})
+    .then((data) => {
+      // console.log(data);
+      if (data.jwt) {
+        localStorage.setItem('jwt', data.jwt);
+        setLoggedIn(true);
+        setUserData({
+          username: data.user.username,
+          email: data.user.email
+        });
+        navigate('/sign-in');
+      }
+    })
+  }
 
   function handleCardClick (selectedCard) {
     setSelectedCard(selectedCard);
@@ -167,30 +179,6 @@ function App() {
     <div  className="container">
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
-          {/* <Route exact path='/'
-            element={
-              <>
-                <Header
-                  headerText='Выйти'
-                  linkTo={'/sign-in'}
-                  email='email@mail.com'
-                />
-                <Main
-                  onEditProfile={handleEditProfileClick}
-                  onEditAvatar={handleEditAvatarClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onImagePopup={handleImagePopupClick}
-                  cards={cards}
-                  onCardClick={handleCardClick}
-                  onCardLike={handleCardLike}
-                  onCardDelete={handleCardDelete}
-                  loggedIn={loggedIn}
-                />
-                <Footer />
-              </>
-            }
-          /> */}
-
           <Route exact path='/'
             element={
               <>
@@ -218,7 +206,6 @@ function App() {
                   component={Footer}
                 />
               </>
-
             }
           />
 
@@ -231,7 +218,7 @@ function App() {
                   email=''
                 />
                 <Register
-                  // handleRegister={handleRegister}
+                  onRegisterUserData={handleRegister}
                 />
               </>
             }
@@ -245,7 +232,7 @@ function App() {
                 linkTo={'/sign-up'}
                 email=''
               />
-              <Login />
+              <Login handleLogin={handleLogin} />
             </>
 
             }

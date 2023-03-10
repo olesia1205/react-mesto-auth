@@ -6,17 +6,13 @@ class UserAuth {
 
   _getResponse(response) {
     return response.ok ? response.json() : Promise.reject(`Ошибка: ${response.status}`);
-    // if (response.ok) {
-    //   return response.json();
-    // }
-    // return Promise.reject(`Ошибка: ${response.status}`);
   }
 
-  register(email, password) {
+  register({password, email}) {
     return fetch(`${this._url}/signup`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({email, password})
+      body: JSON.stringify({password, email})
     })
     .then(this._getResponse)
   }
@@ -43,7 +39,7 @@ class UserAuth {
 }
 
 const userAuth = new UserAuth({
-  BASE_URL: 'https://auth.nomoreparties.co/',
+  BASE_URL: 'https://auth.nomoreparties.co',
   headers: {
     'Content-Type': 'application/json'
   }
