@@ -68,17 +68,17 @@ function App() {
 
   useEffect(() => {
     tockenCheck();
-  }, []);
+  }, [navigate]);
 
   function tockenCheck() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       userAuth.getContent(jwt)
-      .then((res) => {
+      .then((response) => {
+        // console.log(response);
         setLoggedIn(true);
         setUserData({
-          username: res.username,
-          email: res.email
+          email: response.data.email
         });
         navigate ('/');
       })
@@ -96,7 +96,9 @@ function App() {
           email: email
         });
         navigate('/');
-
+    })
+    .catch((error) => {
+      console.log(error);
     })
   }
 

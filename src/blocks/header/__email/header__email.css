@@ -11,6 +11,8 @@
 
 @media screen and (max-width: 630px) {
   .header__email {
-    padding: 0 0 40px;
+    padding: 0 8px 40px;
+    font-size: 14px;
+    line-height: 17px;
   }
 }
