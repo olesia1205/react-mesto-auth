@@ -27,7 +27,7 @@ function Register({...props}) {
     <div  className="signup" >
       <div  className="signup__container">
         <h2  className="signup__title">Регистрация</h2>
-        <form  className="signup__form" noValidate onSubmit={handleSubmit}>
+        <form  className="signup__form" onSubmit={handleSubmit}>
           <>
             <input
               className="signup__input signup__input_info_email"

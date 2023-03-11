@@ -13,7 +13,6 @@ import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import InfoTooltip from './InfoTooltip';
 import api from '../utils/Api';
-import UserAuth from '../utils/UserAuth';
 import { CurrentUserContext} from '../contexts/CurrentUserContext';
 import userAuth from '../utils/UserAuth';
 import successImage from '../images/Success.svg';
@@ -27,6 +26,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
+  const [infoTooltiptext, setInfoTooltiptext] = useState('');
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
@@ -47,24 +47,16 @@ function App() {
   }
 
   useEffect(() => {
-    api.getAllNeededData()
-      .then((result) => {
-        const [dataForUserInfo, dataForInitialCards] = result;
-        // console.log(result);
+    if(loggedIn) {
+      api.getAllNeededData()
+      .then(([dataForUserInfo, dataForInitialCards]) => {
+        // console.log([dataForUserInfo, dataForInitialCards]);
         setCurrentUser(dataForUserInfo);
         setCards(dataForInitialCards);
       })
-      .catch(err => alert(err))
-  }, []);
-
-  useEffect(() => {
-    api.getUserInfo()
-      .then((userInfo) => {
-        // console.log(userInfo);
-        setCurrentUser(userInfo);
-      })
-      .catch(err => alert(err))
-  }, []);
+      .catch(err => console.log(err))
+    }
+  }, [loggedIn]);
 
   useEffect(() => {
     tockenCheck();
@@ -82,6 +74,7 @@ function App() {
         });
         navigate ('/');
       })
+      .catch(err => console.log(err))
     }
   }
 
@@ -89,11 +82,13 @@ function App() {
     userAuth.register({password, email})
     .then(() => {
       setRegistered(true);
+      setInfoTooltiptext('Вы успешно зарегистрировались!');
       setInfoTooltipPopupOpen(true);
       navigate('/sign-in');
     })
     .catch((error) => {
       setRegistered(false);
+      setInfoTooltiptext('Что-то пошло не так! Попробуйте ещё раз.');
       setInfoTooltipPopupOpen(true);
       console.log(error);
     })
@@ -112,6 +107,9 @@ function App() {
         navigate('/');
     })
     .catch((error) => {
+      setRegistered(false);
+      setInfoTooltiptext('Что-то пошло не так! Попробуйте ещё раз.');
+      setInfoTooltipPopupOpen(true);
       console.log(error);
     })
   }
@@ -142,7 +140,7 @@ function App() {
       .then((newCard) => {
         setCards(state => state.map((c) => c._id === card._id ? newCard : c));
       })
-      .catch(err => alert(err))
+      .catch(err => console.log(err))
   }
 
   function handleCardDelete(card) {
@@ -150,7 +148,7 @@ function App() {
       .then(() => {
         setCards(cards => cards.filter((c) => c._id !== card._id));
       })
-      .catch(err => alert(err))
+      .catch(err => console.log(err))
   }
 
   function handleUpdateUser(newUserInfo) {
@@ -159,7 +157,7 @@ function App() {
         setCurrentUser(newUserInfo);
         closeAllPopups();
       })
-      .catch(err => alert(err))
+      .catch(err => console.log(err))
   }
 
   function handleUpdateAvatar(avatar) {
@@ -168,7 +166,7 @@ function App() {
         setCurrentUser(avatar);
         closeAllPopups();
       })
-      .catch(err => alert(err))
+      .catch(err => console.log(err))
   }
 
   function handleAddPlaceSubmit(data) {
@@ -177,7 +175,7 @@ function App() {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch(err => alert(err))
+      .catch(err => console.log(err))
   }
 
   const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
@@ -284,7 +282,7 @@ function App() {
 
         <InfoTooltip
           isOpen={isInfoTooltipPopupOpen}
-          title={registered ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+          title={infoTooltiptext}
           onClose={closeAllPopups}
           onOverlayClick={handleOverlayClick}
           image={registered ? successImage : failImage}

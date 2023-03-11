@@ -5,7 +5,7 @@ function PopupWithForm({name, title, children, isOpen, onClose, buttonText, onSu
     <div  className={`popup popup_type_${name} ${isOpen ? 'popup_is-opened' : ''}`} onClick={onOverlayClick} >
       <div  className="popup__container">
         <h2  className="popup__title">{title}</h2>
-        <form  className={`popup__form popup__form_type_${name}`} name={`popup-form-${name}`} id={`popup-form-${name}`} onSubmit={onSubmit} noValidate>
+        <form  className={`popup__form popup__form_type_${name}`} name={`popup-form-${name}`} id={`popup-form-${name}`} onSubmit={onSubmit} >
           <>
           {children}
           <button  className="popup__submit-button" type="submit" name="submit-button" value={buttonText}>{buttonText}</button>

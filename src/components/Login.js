@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
 
 function Login({...props}) {
@@ -27,7 +27,7 @@ function Login({...props}) {
     <div  className="signup" >
       <div  className="signup__container">
         <h2  className="signup__title">Вход</h2>
-        <form  className="signup__form" noValidate onSubmit={handleSubmit}>
+        <form  className="signup__form" onSubmit={handleSubmit}>
           <>
             <input
               className="signup__input signup__input_info_email"
