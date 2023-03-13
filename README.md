@@ -1,9 +1,9 @@
-[![LOGO](src/images/header-logo-black.svg)](https://olesia1205.github.io/mesto-react/index.html "Я ♥ ПУТЕШЕСТВОВАТЬ!")
+[![LOGO](src/images/header-logo-black.svg)](https://olesia1205.github.io/react-mesto-auth/index.html "Я ♥ ПУТЕШЕСТВОВАТЬ!")
 # Проект: Mesto (React)
 
 ### О проекте
 
-[Проект](https://olesia1205.github.io/mesto-react/index.html) был создан на базе [Create React App](https://github.com/facebook/create-react-app).
+[Проект](https://olesia1205.github.io/react-mesto-auth/index.html) был создан на базе [Create React App](https://github.com/facebook/create-react-app).
 
 `Mesto` - сайт, где можно делиться фотографиями, ставить карточкам лайки или дизлайки.
 Первоначальные данные о пользователе и карточках подгружаются с сервера.
@@ -11,11 +11,11 @@
 По клику можно посмотреть картинку в большем масштабе (zoom).
 Есть возможность удалять карточки.
 
-Реализована регистрация и авторизация пользователя. Вся функциональность приложения
-доступна только авторизованным пользователям по роуту "/".
-Созданы дополнительные роуты:
- "/sign-up" - для регистрации пользователя, и
- "/sign-in" - для авторизации пользователя.
+Реализована регистрация и авторизация пользователя.     
+Вся функциональность приложения доступна только авторизованным пользователям по роуту "/".       
+Созданы дополнительные роуты:     
+ "/sign-up" - для регистрации пользователя, и     
+ "/sign-in" - для авторизации пользователя.     
 
  `Используемые технологии:`
 
@@ -37,7 +37,7 @@
 
 ***
 
-ссылка на сайт: https://olesia1205.github.io/mesto-react/index.html
+ссылка на сайт: https://olesia1205.github.io/react-mesto-auth/index.html
 
 ![screenshot](src/images/screenshot-4.jpg)
 ![screenshot](src/images/screenshot-3.jpg)
