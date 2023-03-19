@@ -31,6 +31,7 @@ function EditProfilePopup({ isOpen, onClose, onOverlayClick, ...props }) {
       onSubmit={handleSubmit}
       onOverlayClick={onOverlayClick}
       isDisabled={!isValid}
+      buttonClassName=''
     >
       <>
         <div className="popup__input-container">

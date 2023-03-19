@@ -1,14 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import useValidation from '../utils/Validation';
 
 function EditAvatarPopup({ isOpen, onClose, onOverlayClick, ...props }) {
-  const currentUser = useContext(CurrentUserContext);
   const { values, errors, handleChange, resetValidation, isValid } = useValidation();
 
   useEffect(() => {
-      resetValidation();
+    resetValidation();
   }, [isOpen, resetValidation]);
 
   function handleSubmit(evt) {
@@ -26,6 +24,7 @@ function EditAvatarPopup({ isOpen, onClose, onOverlayClick, ...props }) {
       onSubmit={handleSubmit}
       onOverlayClick={onOverlayClick}
       isDisabled={!isValid}
+      buttonClassName=''
     >
       <>
         <div className="popup__input-container">

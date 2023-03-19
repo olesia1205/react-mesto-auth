@@ -4,10 +4,11 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
-import PopupWithForm from './PopupWithForm';
+// import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import PopupWithConfirm from './PopupWithConfirm';
 import Register from './Register';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
@@ -26,12 +27,14 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = useState(false);
+  const [isPopupWithConfirmOpen, setIsPopupWithConfirmOpen] = useState(false);
   const [infoTooltiptext, setInfoTooltiptext] = useState('');
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [registered, setRegistered] = useState(false);
+  const [deletedCard, setDeletedCard] = useState({});
   const [userData, setUserData] =useState({
     password: '',
     email: ''
@@ -44,6 +47,7 @@ function App() {
     setIsImagePopupOpen(false);
     setSelectedCard({});
     setInfoTooltipPopupOpen(false);
+    setIsPopupWithConfirmOpen(false);
   }
 
   useEffect(() => {
@@ -182,6 +186,10 @@ function App() {
   const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
   const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
   const handleImagePopupClick = () => setIsImagePopupOpen(true);
+  const handlePopupWithConfirm = (card) => {
+    setIsPopupWithConfirmOpen(true);
+    setDeletedCard(card);
+  };
 
   return (
     <div  className="container">
@@ -208,7 +216,7 @@ function App() {
                     cards={cards}
                     onCardClick={handleCardClick}
                     onCardLike={handleCardLike}
-                    onCardDelete={handleCardDelete}
+                    onCardDelete={handlePopupWithConfirm}
                 />
                 <ProtectedRoute
                   loggedIn={loggedIn}
@@ -288,11 +296,12 @@ function App() {
           image={registered ? successImage : failImage}
         />
 
-        {/* Попап удаления карточки */}
-        <PopupWithForm
-          name='confirm'
-          title='Вы уверены?'
-          buttonText='Да'
+        <PopupWithConfirm
+          isOpen={isPopupWithConfirmOpen}
+          onClose={closeAllPopups}
+          onOverlayClick={handleOverlayClick}
+          onSubmit={handleCardDelete}
+          card={deletedCard}
         />
       </CurrentUserContext.Provider>
     </div>
