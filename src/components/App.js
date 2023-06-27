@@ -128,12 +128,25 @@ function App() {
     navigate('/sign-in');
   }
 
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscapeClick);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeClick);
+    }
+  })
+
   function handleCardClick (selectedCard) {
     setSelectedCard(selectedCard);
   };
 
   function handleOverlayClick (evt) {
     if (evt.target === evt.currentTarget) {
+      closeAllPopups();
+    }
+  }
+
+    function handleEscapeClick (evt) {
+    if (evt.key === 'Escape') {
       closeAllPopups();
     }
   }
