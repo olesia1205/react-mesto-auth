@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 
 function useValidation () {
   const [values, setValues] = useState({});
@@ -8,20 +8,16 @@ function useValidation () {
   function handleChange(evt) {
     const {name, value} = evt.target;
     const error = evt.target.validationMessage;
-    setValues({ ... values, [name]: value});
-    setErrors({ ... errors, [name]: error});
+    const isValid = evt.target.closest("form").checkValidity();
+    setValues({ ...values, [name]: value});
+    setErrors({ ...errors, [name]: error});
+    setIsValid(isValid);
   };
 
-  useEffect(() => {
-    // const isValid = evt.target.closest("form").checkValidity();
-    const isValid = Object.values(errors).every(error => error === '');
-    setIsValid(isValid);
-  }, [errors]);
-
-  const resetValidation = useCallback((values={}, errors={}, isValid = false) => {
-    setValues(values);
-    setErrors(errors);
-    setIsValid(isValid);
+  const resetValidation = useCallback((newValues={}, newErrors={}, newIsValid = false) => {
+    setValues(newValues);
+    setErrors(newErrors);
+    setIsValid(newIsValid);
   }, [setValues, setErrors, setIsValid]);
 
   return {
